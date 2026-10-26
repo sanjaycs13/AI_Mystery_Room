@@ -24,11 +24,11 @@ Atlas only accepts connections from its IP access list. We'll add Render's outbo
    - `MONGODB_URI`: the Atlas URI from Step 2.
    - `GEMINI_API_KEY`: your Gemini Developer API key.
    - `CLIENT_ORIGIN`: set this after Vercel deploys in Step 5. If Render requires an initial value, use the expected Vercel origin and correct it later.
-4. Note the service URL, for example `https://ai-mystery-room-api.onrender.com`, and open the service's **Connect → Outbound** panel.
+4. Note the service URL from the Render deploy log (for this deployment: `https://ai-mystery-room-4eki.onrender.com`) and open the service's **Connect → Outbound** panel.
 5. In Atlas **Network Access → IP Access List**, add every outbound CIDR range shown for this Render service's region. The initial Render deploy may fail its database connection while Atlas is still allowlisting; after adding the ranges, trigger a redeploy.
 6. Visit `https://<your-render-host>/api/health`. It should return JSON with `status: "ok"` and `database: "connected"`.
 
-The Blueprint's service name is `ai-mystery-room-api`, which matches the default host in `vercel.json`. If Render assigns a different host, update the API rewrite destination in `vercel.json` to that exact host before deploying the frontend. Render Blueprints support secret prompts using `sync: false` and HTTP health checks. ([Blueprint reference](https://render.com/docs/blueprint-spec), [health checks](https://render.com/docs/health-checks))
+The Render URL can differ from the Blueprint service name; `vercel.json` is set to the URL from this deployment. If Render assigns a different host later, update the API rewrite destination in `vercel.json`. Render Blueprints support secret prompts using `sync: false` and HTTP health checks. ([Blueprint reference](https://render.com/docs/blueprint-spec), [health checks](https://render.com/docs/health-checks))
 
 ## 4. Deploy the frontend to Vercel
 
