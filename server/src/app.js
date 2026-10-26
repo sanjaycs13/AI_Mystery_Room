@@ -13,8 +13,9 @@ app.disable('x-powered-by');
 app.use(helmet());
 app.use(express.json({ limit: '32kb' }));
 app.use((req, res, next) => {
-  const origin = process.env.CLIENT_ORIGIN;
-  if (origin && req.headers.origin === origin) {
+  const allowedOrigins = new Set((process.env.CLIENT_ORIGIN || '').split(',').map((value) => value.trim()).filter(Boolean));
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.has(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Vary', 'Origin');
